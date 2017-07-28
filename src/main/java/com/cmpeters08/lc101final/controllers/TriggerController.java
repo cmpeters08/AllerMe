@@ -58,6 +58,10 @@ public class TriggerController {
         model.addAttribute("title", "Possible Triggers");
         model.addAttribute("productOne", productOne);
         model.addAttribute("productTwo", productTwo);
+
+        CompareIngredients.setProductOne(productOne);
+        CompareIngredients.setProductTwo(productTwo);
+        model.addAttribute("compareItems", CompareIngredients.commonItems());
         return "compare/results";
     }
 

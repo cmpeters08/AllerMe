@@ -50,8 +50,6 @@ public class CompareIngredients {
         return productTwo;
     }
 
-    public void setProductTwo(String productTwo) {
-        this.productTwo = productTwo;
-    }
+    public static void setProductTwo(String productTwo) { CompareIngredients.productTwo= productTwo;}
 }
 
