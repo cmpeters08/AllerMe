@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+<h1 th:text="${title}">Default Title</h1>
+<p th:text="${description}">Default Description</p>
+
+
+<form th:object="${trigger}" method="post" action="/compare/results">
+    <div class="col-md-5">
+    <label th:for="productOne">Product One Ingredients</label>
+    <textarea class="form-control"  name="productOne" style="resize:none" cols="5" rows="10"></textarea>
+    </div>
+
+<div class="col-md-2"></div>
+
+    <div class="col-md-5">
+        <label th:for="productTwo">Product Two Ingredients</label>
+        <textarea class="form-control"  name="productTwo" style="resize:none" cols="5" rows="10"></textarea>
+    </div>
+    <div class="col-md-6 col-md-offset-5">
+        <input type="submit" value="Compare Products" />
+    </div>
+    
+</form>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+<h1 th:text="${title}">Default Title</h1>
+<p th:text="${description}">Default Description</p>
+
+
+<table class="trigger-results">
+   <tr>
+      <!-- <td th:each="item : ${possibleTriggers}" th:text="${item}"></td> -->
+       <!-- <td th:text="${possibleTriggers}"></td> -->
+       <td th:text="${productOne}"></td>
+   </tr>
+    <tr>
+       <td th:text="${productTwo}"></td>
+    </tr>
+</table>
+
+
+</body>
+</html>
