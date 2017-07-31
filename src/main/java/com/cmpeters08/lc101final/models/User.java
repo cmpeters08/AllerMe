@@ -1,45 +1,44 @@
 package com.cmpeters08.lc101final.models;
 
-import javax.persistence.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.constraints.Pattern;
+
 
 /**
- * Created by cmp on 7/25/2017.
+ * Created by LaunchCode implemented cmp on 7/25/2017.
  */
 
-//@Entity
-public class User {
+@Entity
+public class User extends AbstractEntity {
 
-    //@NotNull
-    //@Size(min=4, max=20)
+    @NotNull
+    @Pattern(regexp = "[a-zA-Z][a-zA-Z0-9_-]{4,11}", message = "Invalid username")
     private String username;
 
-    //@Id
-   // @GeneratedValue
-    private int id;
+    @NotNull
+    private String pwHash;
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    //@OneToMany
-    //@JoinColumn(name="user_id")
-    private List<Trigger> triggers = new ArrayList<>();
+    public User() {
+    }
 
+    public User(String username, String password) {
+        this.username = username;
+        this.pwHash = hashPassword(password);
+    }
 
-    //GETTERS AND SETTERS FOR USER CLASS.
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    private static String hashPassword(String password) {
+        return encoder.encode(password);
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public boolean isMatchingPassword(String password) {
+        return encoder.matches(password, pwHash);
     }
 }
