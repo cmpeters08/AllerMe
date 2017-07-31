@@ -9,9 +9,9 @@
 
 
 <table class="trigger-results">
-   <tr>
       <!-- <td th:each="item : ${possibleTriggers}" th:text="${item}"></td> -->
        <!-- <td th:text="${possibleTriggers}"></td> -->
+       <!--
        <td th:text="${productOne}"></td>
    </tr>
     <tr>
@@ -20,7 +20,16 @@
     <tr>
         <td th:text="${compareItems}"></td>
     </tr>
+
+    -->
+    <tr th:each="item : ${compareItems}">
+        <td th:text="${item}"></td>
+    </tr>
 </table>
+
+<ul th:each="item : ${compareItems}">
+    <li th:text="${item}"></li>
+</ul>
 
 
 </body>

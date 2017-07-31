@@ -16,7 +16,7 @@ import javax.validation.Valid;
 
 
 /**
- * Created by LaunchCode
+ * Created by LaunchCode implemented by cmp on July 31 2017
  */
 @Controller
 public class AuthenticationController extends AbstractController {
@@ -51,7 +51,8 @@ public class AuthenticationController extends AbstractController {
         userDao.save(newUser);
         setUserInSession(request.getSession(), newUser);
 
-        return "redirect:";
+        return "redirect:compare";
+
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -83,7 +84,8 @@ public class AuthenticationController extends AbstractController {
 
         setUserInSession(request.getSession(), theUser);
 
-        return "redirect:";
+        //return "redirect:";
+        return "redirect:compare";
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
