@@ -2,6 +2,7 @@ package com.cmpeters08.lc101final.controllers;
 
 
 import com.cmpeters08.lc101final.models.User;
+import com.cmpeters08.lc101final.models.data.TriggerDao;
 import com.cmpeters08.lc101final.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,6 +17,9 @@ public abstract class AbstractController {
 
     @Autowired
     protected UserDao userDao;
+
+    @Autowired
+    protected TriggerDao triggerDao;
 
     /*
     * Other DAOs can be autowired here and they'll be available

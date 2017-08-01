@@ -8,13 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+
 /**
  * Created by cmp on 7/25/2017.
  */
 
 @Controller
 @RequestMapping(value ="compare")
-public class TriggerController {
+public class TriggerController extends AbstractController{
 
 
 
@@ -24,16 +26,16 @@ public class TriggerController {
         model.addAttribute("description", "Compare two products to find the common ingredients");
 
         return "compare/index";
-
     }
 
     @RequestMapping(value="", method = RequestMethod.POST)
-    public String index2(Model model){
+    public String index2(Model model, @RequestParam String username){
         model.addAttribute("title", "AllergyApp");
         model.addAttribute("description","Compare two products to find the common ingredients" );
         model.addAttribute("productOne", CompareIngredients.getProductOne());
         model.addAttribute("productTwo", CompareIngredients.getProductTwo());
         model.addAttribute("trigger", new Trigger());
+        model.addAttribute("username", username);
 
         return "compare/results";
     }
@@ -54,10 +56,14 @@ public class TriggerController {
         model.addAttribute("productOne", productOne);
         model.addAttribute("productTwo", productTwo);
 
-
         CompareIngredients.setProductOne(productOne);
         CompareIngredients.setProductTwo(productTwo);
-        model.addAttribute("compareItems", CompareIngredients.commonItems());
+
+       ArrayList myCompare = CompareIngredients.commonItems();
+
+       model.addAttribute("compareItems", myCompare);
+
+        //model.addAttribute("compareItems", CompareIngredients.commonItems());
         return "compare/results";
     }
 
