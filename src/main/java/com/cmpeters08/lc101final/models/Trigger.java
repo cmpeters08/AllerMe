@@ -1,23 +1,21 @@
 package com.cmpeters08.lc101final.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.ArrayList;
 
 /**
  * Created by cmp on 7/25/2017.
  */
 
-//@Entity
+@Entity
+@Table(name="triggers")
 public class Trigger {
 
-    //@Id
-    //@GeneratedValue
+    @Id
+    @GeneratedValue
     private int id;
 
-  //  @ManyToOne
+    @ManyToOne
     private User user;
 
 

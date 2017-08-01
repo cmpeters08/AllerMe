@@ -54,6 +54,7 @@ public class TriggerController {
         model.addAttribute("productOne", productOne);
         model.addAttribute("productTwo", productTwo);
 
+
         CompareIngredients.setProductOne(productOne);
         CompareIngredients.setProductTwo(productTwo);
         model.addAttribute("compareItems", CompareIngredients.commonItems());
