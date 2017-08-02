@@ -56,6 +56,8 @@ public class TriggerController extends AbstractController{
         model.addAttribute("productOne", productOne);
         model.addAttribute("productTwo", productTwo);
 
+        model.addAttribute("trigger", new Trigger());
+
         CompareIngredients.setProductOne(productOne);
         CompareIngredients.setProductTwo(productTwo);
 
@@ -66,6 +68,8 @@ public class TriggerController extends AbstractController{
         //model.addAttribute("compareItems", CompareIngredients.commonItems());
         return "compare/results";
     }
+
+
 
 
 }

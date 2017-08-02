@@ -20,23 +20,25 @@
         <td th:text="${compareItems}"></td>
     </tr>
 -->
-<!--
+
+<form th:object="${trigger}" method="post" action="../user/savedresults">
 <table class="trigger-results">
     <tr th:each="item : ${compareItems}">
-        <form>
-            <td th:text="${item}"></td>
-            <input type="button" value="save" />
-        </form>
+        <td th:text="${item}" name="item"></td>
+        <td>
+        <input type="checkbox" name="item" />
+        </td>
     </tr>
 </table>
--->
-
-<form method="post">
-<ul th:each="item : ${compareItems}">
-    <li th:text="${item}"></li> <input type="button" value="save" name="save-trigger"/>
-</ul>
 </form>
 
+<!--
+<form method="post" action="../user/savedresults">
+<ul th:each="item : ${compareItems}">
+    <li th:text="${item}" name="item"></li>
+</ul>
+</form>
+-->
 
 
 </body>
