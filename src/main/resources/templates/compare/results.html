@@ -8,7 +8,6 @@
 <p th:text="${description}">Default Description</p>
 
 
-<table class="trigger-results">
       <!-- <td th:each="item : ${possibleTriggers}" th:text="${item}"></td> -->
        <!-- <td th:text="${possibleTriggers}"></td> -->
        <!--
@@ -20,16 +19,24 @@
     <tr>
         <td th:text="${compareItems}"></td>
     </tr>
-
-    -->
+-->
+<!--
+<table class="trigger-results">
     <tr th:each="item : ${compareItems}">
-        <td th:text="${item}"></td>
+        <form>
+            <td th:text="${item}"></td>
+            <input type="button" value="save" />
+        </form>
     </tr>
 </table>
+-->
 
+<form method="post">
 <ul th:each="item : ${compareItems}">
-    <li th:text="${item}"></li>
+    <li th:text="${item}"></li> <input type="button" value="save" name="save-trigger"/>
 </ul>
+</form>
+
 
 
 </body>
