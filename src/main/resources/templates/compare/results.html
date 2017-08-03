@@ -23,13 +23,15 @@
 
 <form th:object="${trigger}" method="post" action="../user/savedresults">
 <table class="trigger-results">
-    <tr th:each="item : ${compareItems}">
-        <td th:text="${item}" name="item"></td>
+    <tr th:each="aTrigger : ${compareItems}">
+      <!--  <td th:text="${item}" name="item"></td> -->
         <td>
-        <input type="checkbox" name="item" />
+        <input type="checkbox" name="aTrigger" th:value="${aTrigger}" />
+            <label th:for="aTrigger" th:text="${aTrigger}" name="${aTrigger}"></label>
         </td>
     </tr>
 </table>
+    <input type="submit" value="this is a button" />
 </form>
 
 <!--

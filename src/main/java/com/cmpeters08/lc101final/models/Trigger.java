@@ -19,6 +19,7 @@ public class Trigger {
     private User user;
 
 
+
     //things suspected to have caused a reaction. an ingredient common in one or more user inputs.
     private ArrayList<String> knownTriggers;
 
@@ -44,6 +45,14 @@ public class Trigger {
 
     public void setTriggerExceptions(ArrayList<String> triggerExceptions) {
         this.triggerExceptions = triggerExceptions;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public  static ArrayList<String> getTriggerResults() {
