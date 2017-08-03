@@ -34,8 +34,13 @@ public String savedResults(@ModelAttribute @Valid Trigger newTrigger, Model mode
     model.addAttribute("title", "Saved Results");
     model.addAttribute("aTrigger", aTrigger);
 
+    newTrigger.setKnownTriggers(aTrigger);
+
+    triggerDao.save(newTrigger);
 
     return "user/savedresults";
+
+    //return "redirect:";
 
 }
 
