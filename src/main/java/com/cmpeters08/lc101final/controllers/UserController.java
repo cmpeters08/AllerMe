@@ -1,6 +1,7 @@
 package com.cmpeters08.lc101final.controllers;
 
 import com.cmpeters08.lc101final.models.Trigger;
+import com.cmpeters08.lc101final.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,13 +30,17 @@ public String saveResults(Model model,  @RequestParam String aTrigger){
 }
 
 @RequestMapping(value="savedresults", method = RequestMethod.POST)
-public String savedResults(@ModelAttribute @Valid Trigger newTrigger, Model model, @RequestParam String aTrigger){
+public String savedResults(@ModelAttribute @Valid Trigger newTrigger, User aUser, Model model, @RequestParam String aTrigger){
 
     model.addAttribute("title", "Saved Results");
     model.addAttribute("aTrigger", aTrigger);
 
-    newTrigger.setKnownTriggers(aTrigger);
+    aUser.getUid();
 
+    //need to figure out a way to see what user is in the session.
+
+    newTrigger.setKnownTriggers(aTrigger);
+    newTrigger.setUser(aUser);
     triggerDao.save(newTrigger);
 
     return "user/savedresults";

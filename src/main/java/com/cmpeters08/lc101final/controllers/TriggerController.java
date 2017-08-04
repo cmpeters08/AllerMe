@@ -19,12 +19,12 @@ import java.util.ArrayList;
 public class TriggerController extends AbstractController{
 
 
-
     @RequestMapping(value="", method = RequestMethod.GET)
     public String index(Model model){
         model.addAttribute("title", "AllergyApp");
         model.addAttribute("description", "Compare two products to find the common ingredients");
 
+        //model.addAttribute("username", userDao.findByUsername(userSessionKey));
         return "compare/index";
     }
 

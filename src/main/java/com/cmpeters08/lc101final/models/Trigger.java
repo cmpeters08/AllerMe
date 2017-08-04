@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 @Entity
 @Table(name="triggers")
-public class Trigger {
+public class Trigger{
 
     @Id
     @GeneratedValue
@@ -17,6 +17,7 @@ public class Trigger {
 
     @ManyToOne
     private User user;
+
 
 
 
@@ -49,6 +50,15 @@ public class Trigger {
 //    public void setTriggerExceptions(ArrayList<String> triggerExceptions) {
 //        this.triggerExceptions = triggerExceptions;
 //    }
+
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public int getId() {
         return id;
