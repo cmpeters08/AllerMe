@@ -39,6 +39,7 @@ public String savedResults(@ModelAttribute @Valid Trigger newTrigger, User aUser
 
     //need to figure out a way to see what user is in the session.
 
+    //comment to commit
     newTrigger.setKnownTriggers(aTrigger);
     newTrigger.setUser(aUser);
     triggerDao.save(newTrigger);
