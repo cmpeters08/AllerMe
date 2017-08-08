@@ -37,12 +37,20 @@ public String savedResults(@ModelAttribute @Valid Trigger newTrigger, User aUser
 
     aUser.getUid();
 
-    //need to figure out a way to see what user is in the session.
-
-    //comment to commit
-    newTrigger.setKnownTriggers(aTrigger);
     newTrigger.setUser(aUser);
-    triggerDao.save(newTrigger);
+    String[] manyTriggers = aTrigger.split(",");
+
+    for(String item : manyTriggers) {
+        Trigger dasTrigger = new Trigger();
+        dasTrigger.setUser(aUser);
+        dasTrigger.setKnownTriggers(item);
+        triggerDao.save(dasTrigger);
+    }
+
+
+//    newTrigger.setKnownTriggers(aTrigger);
+//    newTrigger.setUser(aUser);
+//    triggerDao.save(newTrigger);
 
     return "user/savedresults";
 
