@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -20,9 +21,15 @@ import javax.validation.Valid;
 public class UserController extends AbstractController{
 
 @RequestMapping(value="")
-public String index(Model model){
+public String index(Model model, HttpServletRequest request){
+
+
+    User currentUser = getUserFromSession(request.getSession());
+
+   model.addAttribute("user", currentUser);
     model.addAttribute("title", "Saved Triggers");
-    model.addAttribute("triggers", triggerDao.findAll());
+    model.addAttribute("triggers", triggerDao.findByUser(currentUser));
+   // model.addAttribute("triggers", triggerDao.findAll());
     return "user/index";
 }
 
@@ -59,8 +66,11 @@ public String savedResults(@ModelAttribute @Valid Trigger newTrigger, User aUser
 }
 
 @RequestMapping(value="remove", method=RequestMethod.GET)
-public String removeTrigger(Model model){
-    model.addAttribute("triggers", triggerDao.findAll());
+public String removeTrigger(Model model, HttpServletRequest request){
+
+    User currentUser = getUserFromSession(request.getSession());
+
+    model.addAttribute("triggers", triggerDao.findByUser(currentUser));
     model.addAttribute("title", "Delete Triggers From the Database");
 
     return "user/remove";
