@@ -19,6 +19,13 @@ import javax.validation.Valid;
 @RequestMapping(value="user")
 public class UserController extends AbstractController{
 
+@RequestMapping(value="")
+public String index(Model model){
+    model.addAttribute("title", "Saved Triggers");
+    model.addAttribute("triggers", triggerDao.findAll());
+    return "user/index";
+}
+
 @RequestMapping(value = "savedresults", method = RequestMethod.GET)
 public String saveResults(Model model,  @RequestParam String aTrigger){
 
@@ -47,17 +54,27 @@ public String savedResults(@ModelAttribute @Valid Trigger newTrigger, User aUser
         triggerDao.save(dasTrigger);
     }
 
-
-//    newTrigger.setKnownTriggers(aTrigger);
-//    newTrigger.setUser(aUser);
-//    triggerDao.save(newTrigger);
-
     return "user/savedresults";
-
-    //return "redirect:";
 
 }
 
+@RequestMapping(value="remove", method=RequestMethod.GET)
+public String removeTrigger(Model model){
+    model.addAttribute("triggers", triggerDao.findAll());
+    model.addAttribute("title", "Delete Triggers From the Database");
+
+    return "user/remove";
+
+}
+
+@RequestMapping(value="remove", method = RequestMethod.POST)
+    public String removeTheTrigger(@RequestParam int[] triggerIds){
+
+    for(int triggerId : triggerIds){
+        triggerDao.delete(triggerId);
+    }
+    return"redirect:";
+}
 
 
 }

@@ -7,7 +7,10 @@
 <h1 th:text="${title}">Default Title</h1>
 <p th:text="${description}">Default Description</p>
 
-<h1> YOU MAYBE DID IT?</h1>
+
+<ul th:each="item : ${aTrigger}">
+    <li th:text="${item}" name="item"></li>
+</ul>
 
 </body>
 </html>

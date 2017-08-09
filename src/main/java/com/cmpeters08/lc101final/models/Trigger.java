@@ -20,7 +20,6 @@ public class Trigger{
 
 
 
-
     private String knownTriggers;
 
     //things suspected to have caused a reaction. an ingredient common in one or more user inputs.
@@ -83,4 +82,5 @@ public class Trigger{
     public void setKnownTriggers(String knownTriggers) {
         this.knownTriggers = knownTriggers;
     }
+
 }
