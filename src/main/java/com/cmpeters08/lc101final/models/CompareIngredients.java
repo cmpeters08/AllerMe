@@ -16,6 +16,8 @@ public class CompareIngredients {
 
     private static ArrayList<Trigger> existingTriggers;
 
+    private  static ArrayList<String> theSavedIngredients;
+
 
 
     public static ArrayList<String> commonItems(){
@@ -54,26 +56,32 @@ public class CompareIngredients {
     public static void setProductTwo(String productTwo) { CompareIngredients.productTwo= productTwo;}
 
 
-    public static ArrayList<String> compareNewItem(){
+    public static ArrayList<String> compareNewItem() {
 
         String[] productOneSplit = getProductOne().toLowerCase().split(", ");
         ArrayList<String> productOneList = new ArrayList<String>(Arrays.asList(productOneSplit));
+//        String[] productTwoSplit = getProductTwo().toLowerCase().split(", ");
+//        ArrayList<String> productTwoList = new ArrayList<String>(Arrays.asList(productTwoSplit));
 
-
-
-        ArrayList<String> moreCommonItems = new ArrayList();
-
-      // String existingTriggerStr = existingTriggers.toString();
+        ArrayList<String> commonItems = new ArrayList();
 
         for (String item : productOneList){
-            if(getExistingTriggers().contains(item)){
-                moreCommonItems.add(item);
+            if(getTheSavedIngredients().contains(item)){
+                commonItems.add(item);
             }
         }
-        if (moreCommonItems.isEmpty()){
-            moreCommonItems.add("No Matches Found");
+        if (commonItems.isEmpty()){
+            commonItems.add("No Matches Found");
         }
-        return moreCommonItems;
+        return commonItems;
+    }
+
+    public static ArrayList<String> getTheSavedIngredients() {
+        return theSavedIngredients;
+    }
+
+    public static void setTheSavedIngredients(ArrayList<String> theSavedIngredients) {
+        CompareIngredients.theSavedIngredients = theSavedIngredients;
     }
 
     public static ArrayList<Trigger> getExistingTriggers() {

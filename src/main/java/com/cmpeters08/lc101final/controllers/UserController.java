@@ -102,28 +102,32 @@ public class UserController extends AbstractController {
     }
 
     @RequestMapping(value="compare-new", method = RequestMethod.POST)
-    public String compareNewProductPost(@RequestParam String productOne, Model model, HttpServletRequest request){
+    public String compareNewProductPost(@RequestParam String productOne, Model model, HttpServletRequest request) {
         model.addAttribute("title", "these items are in your database");
+
 
         User currentUser = getUserFromSession(request.getSession());
 
-       ArrayList<Trigger> existingTriggers = triggerDao.findByUser(currentUser);
+        ArrayList<Trigger> currentUserTriggers = triggerDao.findByUser(currentUser);
+        ArrayList<String> triggerStr = new ArrayList<>();
 
-
-        model.addAttribute("productOne", productOne);
+        for(Trigger item : currentUserTriggers){
+            triggerStr.add(item.getKnownTriggers());
+        }
 
         CompareIngredients.setProductOne(productOne);
-        CompareIngredients.setExistingTriggers(existingTriggers);
-        ArrayList myCompare = CompareIngredients.compareNewItem();
+        CompareIngredients.setTheSavedIngredients(triggerStr);
+        
 
-        model.addAttribute("compareItems", myCompare);
+        ArrayList mycompare = CompareIngredients.compareNewItem();
 
+        model.addAttribute("compareItems", mycompare);
+        System.out.println(mycompare);
 
-        return "user/comparenewresults";
+        //eventually I want an if statement saying if there are no common triggers than productOne is likely safe
+
+            return "user/comparenewresults";
+        
+
     }
-
-    //need to build a landing page for this
-
-
-
 }

@@ -13,4 +13,5 @@ public interface TriggerDao extends CrudRepository<Trigger, Integer> {
 
     ArrayList<Trigger> findByUser(User user);
 
+
 }

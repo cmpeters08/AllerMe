@@ -53,6 +53,7 @@ public class Trigger{
 //    }
 
 
+
     public User getUser() {
         return user;
     }
