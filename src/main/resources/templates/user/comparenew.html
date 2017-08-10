@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+
+<h1 th:text="${title}">Default Title</h1>
+<h3> Hello, <span th:text="${username}"></span></h3>
+<p th:text="${description}">Default Description</p>
+
+<form th:object="${trigger}" method="post">
+    <div class="col-md-5">
+        <label th:for="productOne">New Product Ingredients</label>
+        <textarea class="form-control"  name="productOne" style="resize:none" cols="5" rows="10"></textarea>
+    </div>
+
+    <input type="submit" value="Compare to Saved Triggers" />
+</form>
+
+</body>
+</html>

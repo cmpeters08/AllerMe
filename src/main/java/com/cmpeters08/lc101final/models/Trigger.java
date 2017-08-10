@@ -30,6 +30,8 @@ public class Trigger{
 
     private  static ArrayList<String> triggerResults;
 
+    private String maybeTrigger;
+
 
 
     // GETTERS AND SETTERS FOR THE TRIGGER CLASS.
@@ -83,4 +85,11 @@ public class Trigger{
         this.knownTriggers = knownTriggers;
     }
 
+    public String getMaybeTrigger() {
+        return maybeTrigger;
+    }
+
+    public void setMaybeTrigger(String maybeTrigger) {
+        this.maybeTrigger = maybeTrigger;
+    }
 }

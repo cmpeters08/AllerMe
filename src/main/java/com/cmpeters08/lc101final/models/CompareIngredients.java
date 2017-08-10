@@ -1,6 +1,5 @@
 package com.cmpeters08.lc101final.models;
 
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -14,6 +13,8 @@ public class CompareIngredients {
 
     //@NotNull
     private static String productTwo;
+
+    private static ArrayList<Trigger> existingTriggers;
 
 
 
@@ -51,5 +52,36 @@ public class CompareIngredients {
     }
 
     public static void setProductTwo(String productTwo) { CompareIngredients.productTwo= productTwo;}
+
+
+    public static ArrayList<String> compareNewItem(){
+
+        String[] productOneSplit = getProductOne().toLowerCase().split(", ");
+        ArrayList<String> productOneList = new ArrayList<String>(Arrays.asList(productOneSplit));
+
+
+
+        ArrayList<String> moreCommonItems = new ArrayList();
+
+      // String existingTriggerStr = existingTriggers.toString();
+
+        for (String item : productOneList){
+            if(getExistingTriggers().contains(item)){
+                moreCommonItems.add(item);
+            }
+        }
+        if (moreCommonItems.isEmpty()){
+            moreCommonItems.add("No Matches Found");
+        }
+        return moreCommonItems;
+    }
+
+    public static ArrayList<Trigger> getExistingTriggers() {
+        return existingTriggers;
+    }
+
+    public static void setExistingTriggers(ArrayList<Trigger> existingTriggers) {
+        CompareIngredients.existingTriggers = existingTriggers;
+    }
 }
 

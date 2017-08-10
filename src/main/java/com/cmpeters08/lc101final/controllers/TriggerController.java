@@ -35,7 +35,7 @@ public class TriggerController extends AbstractController{
         model.addAttribute("productOne", CompareIngredients.getProductOne());
         model.addAttribute("productTwo", CompareIngredients.getProductTwo());
         model.addAttribute("trigger", new Trigger());
-        model.addAttribute("username", username);
+       // model.addAttribute("username", username);
 
         return "compare/results";
     }

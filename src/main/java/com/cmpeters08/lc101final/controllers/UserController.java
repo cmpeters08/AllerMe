@@ -1,5 +1,6 @@
 package com.cmpeters08.lc101final.controllers;
 
+import com.cmpeters08.lc101final.models.CompareIngredients;
 import com.cmpeters08.lc101final.models.Trigger;
 import com.cmpeters08.lc101final.models.User;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 /**
  * Created by cmp on 7/25/2017.
@@ -18,73 +20,110 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping(value="user")
-public class UserController extends AbstractController{
+public class UserController extends AbstractController {
 
-@RequestMapping(value="")
-public String index(Model model, HttpServletRequest request){
+    @RequestMapping(value = "")
+    public String index(Model model, HttpServletRequest request) {
 
 
-    User currentUser = getUserFromSession(request.getSession());
+        User currentUser = getUserFromSession(request.getSession());
 
-   model.addAttribute("user", currentUser);
-    model.addAttribute("title", "Saved Triggers");
-    model.addAttribute("triggers", triggerDao.findByUser(currentUser));
-   // model.addAttribute("triggers", triggerDao.findAll());
-    return "user/index";
-}
-
-@RequestMapping(value = "savedresults", method = RequestMethod.GET)
-public String saveResults(Model model,  @RequestParam String aTrigger){
-
-    model.addAttribute("title", "Saved Results");
-    model.addAttribute(new Trigger());
-    model.addAttribute("aTrigger", aTrigger);
-
-    return "user/savedresults";
-}
-
-@RequestMapping(value="savedresults", method = RequestMethod.POST)
-public String savedResults(@ModelAttribute @Valid Trigger newTrigger, User aUser, Model model, @RequestParam String aTrigger){
-
-    model.addAttribute("title", "Saved Results");
-    model.addAttribute("aTrigger", aTrigger);
-
-    aUser.getUid();
-
-    newTrigger.setUser(aUser);
-    String[] manyTriggers = aTrigger.split(",");
-
-    for(String item : manyTriggers) {
-        Trigger dasTrigger = new Trigger();
-        dasTrigger.setUser(aUser);
-        dasTrigger.setKnownTriggers(item);
-        triggerDao.save(dasTrigger);
+        model.addAttribute("user", currentUser);
+        model.addAttribute("title", "Saved Triggers");
+        model.addAttribute("triggers", triggerDao.findByUser(currentUser));
+        // model.addAttribute("triggers", triggerDao.findAll());
+        return "user/index";
     }
 
-    return "user/savedresults";
+    @RequestMapping(value = "savedresults", method = RequestMethod.GET)
+    public String saveResults(Model model, @RequestParam String aTrigger) {
 
-}
+        model.addAttribute("title", "Saved Results");
+        model.addAttribute(new Trigger());
+        model.addAttribute("aTrigger", aTrigger);
 
-@RequestMapping(value="remove", method=RequestMethod.GET)
-public String removeTrigger(Model model, HttpServletRequest request){
-
-    User currentUser = getUserFromSession(request.getSession());
-
-    model.addAttribute("triggers", triggerDao.findByUser(currentUser));
-    model.addAttribute("title", "Delete Triggers From the Database");
-
-    return "user/remove";
-
-}
-
-@RequestMapping(value="remove", method = RequestMethod.POST)
-    public String removeTheTrigger(@RequestParam int[] triggerIds){
-
-    for(int triggerId : triggerIds){
-        triggerDao.delete(triggerId);
+        return "user/savedresults";
     }
-    return"redirect:";
-}
+
+    @RequestMapping(value = "savedresults", method = RequestMethod.POST)
+    public String savedResults(@ModelAttribute @Valid Trigger newTrigger, User aUser, Model model, @RequestParam String aTrigger) {
+
+        model.addAttribute("title", "Saved Results");
+        model.addAttribute("aTrigger", aTrigger);
+
+        aUser.getUid();
+
+        newTrigger.setUser(aUser);
+        String[] manyTriggers = aTrigger.split(",");
+
+        for (String item : manyTriggers) {
+            Trigger dasTrigger = new Trigger();
+            dasTrigger.setUser(aUser);
+            dasTrigger.setKnownTriggers(item);
+            triggerDao.save(dasTrigger);
+        }
+
+        return "user/savedresults";
+
+    }
+
+    @RequestMapping(value = "remove", method = RequestMethod.GET)
+    public String removeTrigger(Model model, HttpServletRequest request) {
+
+        User currentUser = getUserFromSession(request.getSession());
+
+        model.addAttribute("triggers", triggerDao.findByUser(currentUser));
+        model.addAttribute("title", "Delete Triggers From the Database");
+
+        return "user/remove";
+
+    }
+
+    @RequestMapping(value = "remove", method = RequestMethod.POST)
+    public String removeTheTrigger(@RequestParam int[] triggerIds) {
+
+        for (int triggerId : triggerIds) {
+            triggerDao.delete(triggerId);
+        }
+        return "redirect:";
+    }
+
+    //query the database by user_id to see if the user in session has a trigger that is
+
+    @RequestMapping(value = "compare-new", method = RequestMethod.GET)
+    public String compareNewProductGet(Model model, HttpServletRequest request) {
+
+        User currentUser = getUserFromSession(request.getSession());
+        triggerDao.findByUser(currentUser);
+        model.addAttribute("productOne", CompareIngredients.getProductOne());
+        model.addAttribute("trigger", new Trigger());
+
+        return "user/comparenew";
+    }
+
+    @RequestMapping(value="compare-new", method = RequestMethod.POST)
+    public String compareNewProductPost(@RequestParam String productOne, Model model, HttpServletRequest request){
+        model.addAttribute("title", "these items are in your database");
+
+        User currentUser = getUserFromSession(request.getSession());
+
+       ArrayList<Trigger> existingTriggers = triggerDao.findByUser(currentUser);
+
+
+        model.addAttribute("productOne", productOne);
+
+        CompareIngredients.setProductOne(productOne);
+        CompareIngredients.setExistingTriggers(existingTriggers);
+        ArrayList myCompare = CompareIngredients.compareNewItem();
+
+        model.addAttribute("compareItems", myCompare);
+
+
+        return "user/comparenewresults";
+    }
+
+    //need to build a landing page for this
+
 
 
 }
