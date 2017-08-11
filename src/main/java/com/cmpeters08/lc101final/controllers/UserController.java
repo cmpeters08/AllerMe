@@ -126,6 +126,8 @@ public class UserController extends AbstractController {
 
         //eventually I want an if statement saying if there are no common triggers than productOne is likely safe
 
+        // need to check full functionality and  merge this back to the master branch.
+
             return "user/comparenewresults";
         
 
