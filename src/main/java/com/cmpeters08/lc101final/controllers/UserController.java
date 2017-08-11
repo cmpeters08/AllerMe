@@ -79,6 +79,7 @@ public class UserController extends AbstractController {
 
     }
 
+    //Allows User to Remove saved triggers from the database
     @RequestMapping(value = "remove", method = RequestMethod.POST)
     public String removeTheTrigger(@RequestParam int[] triggerIds) {
 
@@ -88,7 +89,32 @@ public class UserController extends AbstractController {
         return "redirect:";
     }
 
-    //query the database by user_id to see if the user in session has a trigger that is
+
+    @RequestMapping(value ="add-new", method = RequestMethod.GET)
+    public String addNewTrigger(Model model, HttpServletRequest request){
+
+        User currentUser = getUserFromSession(request.getSession());
+        model.addAttribute("triggers", triggerDao.findByUser(currentUser));
+        model.addAttribute("user", currentUser);
+
+        return"user/add";
+    }
+
+    @RequestMapping(value = "add-new", method = RequestMethod.POST)
+    public String addNewTriggerPost(@RequestParam String newTrigger, HttpServletRequest request){
+
+        User currentUser = getUserFromSession(request.getSession());
+
+        String[] addManyTriggers = newTrigger.split(",");
+        for (String item : addManyTriggers) {
+            Trigger addTrigger = new Trigger();
+            addTrigger.setKnownTriggers(item);
+            addTrigger.setUser(currentUser);
+            triggerDao.save(addTrigger);
+        }
+        return"redirect:";
+    }
+
 
     @RequestMapping(value = "compare-new", method = RequestMethod.GET)
     public String compareNewProductGet(Model model, HttpServletRequest request) {
@@ -117,7 +143,6 @@ public class UserController extends AbstractController {
 
         CompareIngredients.setProductOne(productOne);
         CompareIngredients.setTheSavedIngredients(triggerStr);
-        
 
         ArrayList mycompare = CompareIngredients.compareNewItem();
 
@@ -125,11 +150,7 @@ public class UserController extends AbstractController {
         System.out.println(mycompare);
 
         //eventually I want an if statement saying if there are no common triggers than productOne is likely safe
-
         // need to check full functionality and  merge this back to the master branch.
-
             return "user/comparenewresults";
-        
-
     }
 }

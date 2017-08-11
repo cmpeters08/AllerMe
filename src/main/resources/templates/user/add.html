@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+
+<h1 th:text="${title}">Default Title</h1>
+<h3> Hello, <span th:text="${username}"></span></h3>
+<p th:text="${description}">Default Description</p>
+
+<form th:object="${trigger}" method="post">
+    <label th:for="newTrigger">Add A Trigger</label>
+    <input type="text" name="newTrigger" />
+    <input type="submit" value="Add Trigger" />
+
+</form>
+
+</body>
+</html>
