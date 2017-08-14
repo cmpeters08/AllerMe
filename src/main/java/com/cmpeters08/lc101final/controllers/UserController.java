@@ -64,9 +64,6 @@ public class UserController extends AbstractController {
                 triggerDao.save(dasTrigger);
             }
 
-
-
-
         return "user/savedresults";
 
     }
@@ -105,18 +102,39 @@ public class UserController extends AbstractController {
     }
 
     @RequestMapping(value = "add-new", method = RequestMethod.POST)
-    public String addNewTriggerPost(@RequestParam String newTrigger, HttpServletRequest request){
+    public String addNewTriggerPost(@RequestParam String newTrigger, HttpServletRequest request, Model model){
 
         User currentUser = getUserFromSession(request.getSession());
-
-        String[] addManyTriggers = newTrigger.split(",");
-        for (String item : addManyTriggers) {
-            Trigger addTrigger = new Trigger();
-            addTrigger.setKnownTriggers(item);
-            addTrigger.setUser(currentUser);
-            triggerDao.save(addTrigger);
+        ArrayList<Trigger> savedUserTriggers = triggerDao.findByUser(currentUser);
+        ArrayList<String> triggerAsString = new ArrayList<>();
+        for(Trigger trigger : savedUserTriggers){
+            triggerAsString.add(trigger.getKnownTriggers());
         }
-        return"redirect:";
+
+        String[] addManyTriggers = newTrigger.split(", ");
+        ArrayList<String> compareItemDb = new ArrayList();
+
+        for(String item : addManyTriggers){
+            if(!triggerAsString.contains(item)){
+                Trigger addTrigger = new Trigger();
+                addTrigger.setKnownTriggers(item);
+                addTrigger.setUser(currentUser);
+                triggerDao.save(addTrigger);
+            }
+            else{
+                compareItemDb.add(item);
+            }
+        }
+        model.addAttribute("existError", compareItemDb);
+
+
+//        for (String item : addManyTriggers) {
+//            Trigger addTrigger = new Trigger();
+//            addTrigger.setKnownTriggers(item);
+//            addTrigger.setUser(currentUser);
+//            triggerDao.save(addTrigger);
+//        }
+        return"user/index";
     }
 
 
