@@ -2,12 +2,14 @@ package com.cmpeters08.lc101final.controllers;
 
 import com.cmpeters08.lc101final.models.CompareIngredients;
 import com.cmpeters08.lc101final.models.Trigger;
+import com.cmpeters08.lc101final.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
 /**
@@ -50,7 +52,17 @@ public class TriggerController extends AbstractController{
 
     @RequestMapping(value = "results", method = RequestMethod.POST)
     public String results(Model model,
-                          @RequestParam String productOne, @RequestParam String productTwo){
+                          @RequestParam String productOne, @RequestParam String productTwo, HttpServletRequest request){
+
+
+        User currentUser = getUserFromSession(request.getSession());
+       ArrayList<Trigger> savedUserTriggers = triggerDao.findByUser(currentUser);
+       //convert trigger to string
+        ArrayList<String> trstr = new ArrayList<>(); //this holds the database stuff as strings
+        for(Trigger trigger : savedUserTriggers){
+            trstr.add(trigger.getKnownTriggers());
+        }
+        ///
 
         model.addAttribute("title", "Possible Triggers");
         model.addAttribute("productOne", productOne);
@@ -61,9 +73,29 @@ public class TriggerController extends AbstractController{
         CompareIngredients.setProductOne(productOne);
         CompareIngredients.setProductTwo(productTwo);
 
-       ArrayList myCompare = CompareIngredients.commonItems();
+        ArrayList<String> myCompare = CompareIngredients.commonItems();
 
-       model.addAttribute("compareItems", myCompare);
+
+    //add exist error to compare/results and test
+
+        ArrayList<String> compareItemDb = new ArrayList();
+        for(String item : myCompare){
+            if(trstr.contains(item)){
+               // myCompare.remove(item);
+                compareItemDb.add(item);
+            }
+        }
+        for(String item : compareItemDb){
+            myCompare.remove(item);
+        }
+      //  model.addAttribute("existError", compareItemDb);
+
+        System.out.println(myCompare);
+        System.out.println(trstr);
+        System.out.println(compareItemDb);
+        model.addAttribute("existError", compareItemDb);
+        model.addAttribute("compareItems", myCompare);
+
 
 
         //model.addAttribute("compareItems", CompareIngredients.commonItems());

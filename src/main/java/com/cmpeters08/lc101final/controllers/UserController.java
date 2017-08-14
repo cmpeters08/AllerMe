@@ -25,7 +25,6 @@ public class UserController extends AbstractController {
     @RequestMapping(value = "")
     public String index(Model model, HttpServletRequest request) {
 
-
         User currentUser = getUserFromSession(request.getSession());
 
         model.addAttribute("user", currentUser);
@@ -46,7 +45,8 @@ public class UserController extends AbstractController {
     }
 
     @RequestMapping(value = "savedresults", method = RequestMethod.POST)
-    public String savedResults(@ModelAttribute @Valid Trigger newTrigger, User aUser, Model model, @RequestParam String aTrigger) {
+    public String savedResults(@ModelAttribute @Valid Trigger newTrigger, User aUser, Model model,
+                               @RequestParam String aTrigger) {
 
         model.addAttribute("title", "Saved Results");
         model.addAttribute("aTrigger", aTrigger);
@@ -56,12 +56,16 @@ public class UserController extends AbstractController {
         newTrigger.setUser(aUser);
         String[] manyTriggers = aTrigger.split(",");
 
+
         for (String item : manyTriggers) {
-            Trigger dasTrigger = new Trigger();
-            dasTrigger.setUser(aUser);
-            dasTrigger.setKnownTriggers(item);
-            triggerDao.save(dasTrigger);
-        }
+                Trigger dasTrigger = new Trigger();
+                dasTrigger.setUser(aUser);
+                dasTrigger.setKnownTriggers(item);
+                triggerDao.save(dasTrigger);
+            }
+
+
+
 
         return "user/savedresults";
 
@@ -131,26 +135,21 @@ public class UserController extends AbstractController {
     public String compareNewProductPost(@RequestParam String productOne, Model model, HttpServletRequest request) {
         model.addAttribute("title", "these items are in your database");
 
-
         User currentUser = getUserFromSession(request.getSession());
 
         ArrayList<Trigger> currentUserTriggers = triggerDao.findByUser(currentUser);
         ArrayList<String> triggerStr = new ArrayList<>();
 
-        for(Trigger item : currentUserTriggers){
-            triggerStr.add(item.getKnownTriggers());
-        }
 
+        for(Trigger item : currentUserTriggers){
+            triggerStr.add(item.getKnownTriggers().toLowerCase());
+        }
         CompareIngredients.setProductOne(productOne);
         CompareIngredients.setTheSavedIngredients(triggerStr);
-
         ArrayList mycompare = CompareIngredients.compareNewItem();
 
         model.addAttribute("compareItems", mycompare);
-        System.out.println(mycompare);
 
-        //eventually I want an if statement saying if there are no common triggers than productOne is likely safe
-        // need to check full functionality and  merge this back to the master branch.
             return "user/comparenewresults";
     }
 }

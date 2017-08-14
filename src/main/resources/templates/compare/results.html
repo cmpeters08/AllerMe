@@ -21,6 +21,13 @@
     </tr>
 -->
 
+<p>These Triggers are already in your profile, no need to add them again!</p>
+<ul th:each="item : ${existError}">
+    <li th:text="${item}" name="item"></li>
+</ul>
+
+
+<p>Here are the common ingredients, would you like to save them to your profile.</p>
 <form th:object="${trigger}" method="post" action="../user/savedresults">
 <table class="trigger-results">
     <tr th:each="aTrigger : ${compareItems}">
