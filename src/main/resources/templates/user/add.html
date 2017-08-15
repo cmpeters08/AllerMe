@@ -9,6 +9,12 @@
 <h3> Hello, <span th:text="${username}"></span></h3>
 <p th:text="${description}">Default Description</p>
 
+
+    <p th:if="${existError} and ${existError.size()}">These Triggers are already in your profile, no need to add them again!</p>
+    <ul th:each="item : ${existError}">
+        <li th:text="${item}" name="item"></li>
+    </ul>
+
 <form th:object="${trigger}" method="post">
     <label th:for="newTrigger">Add A Trigger</label>
     <input type="text" name="newTrigger" />

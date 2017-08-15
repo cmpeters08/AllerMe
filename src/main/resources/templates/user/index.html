@@ -7,10 +7,12 @@
 <h1 th:text="${title}">Default Title</h1>
 <p th:text="${description}">Default Description</p>
 
+
 <p th:if="${existError} and ${existError.size()}">These Triggers are already in your profile, no need to add them again!</p>
 <ul th:each="item : ${existError}">
     <li th:text="${item}" name="item"></li>
 </ul>
+
 <table>
     <tr th:each="trigger : ${triggers}">
         <td th:text="${trigger.knownTriggers}" th:value="${trigger.id}" th:id="${trigger.id}"></td>

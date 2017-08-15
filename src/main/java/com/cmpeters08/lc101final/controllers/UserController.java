@@ -127,14 +127,8 @@ public class UserController extends AbstractController {
         }
         model.addAttribute("existError", compareItemDb);
 
-
-//        for (String item : addManyTriggers) {
-//            Trigger addTrigger = new Trigger();
-//            addTrigger.setKnownTriggers(item);
-//            addTrigger.setUser(currentUser);
-//            triggerDao.save(addTrigger);
-//        }
-        return"user/index";
+        //return"user/index";
+        return "user/add";
     }
 
 
@@ -164,10 +158,12 @@ public class UserController extends AbstractController {
         }
         CompareIngredients.setProductOne(productOne);
         CompareIngredients.setTheSavedIngredients(triggerStr);
-        ArrayList mycompare = CompareIngredients.compareNewItem();
+        ArrayList commonItems = CompareIngredients.compareNewItem();
 
-        model.addAttribute("compareItems", mycompare);
+        model.addAttribute("existError", commonItems);
 
-            return "user/comparenewresults";
+
+            //return "user/comparenewresults";
+        return "user/savedresults";
     }
 }

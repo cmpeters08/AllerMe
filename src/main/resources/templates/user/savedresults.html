@@ -7,10 +7,20 @@
 <h1 th:text="${title}">Default Title</h1>
 <p th:text="${description}">Default Description</p>
 
+<!--
+<p th:unless="${aTrigger} and {aTrigger.size()}">The product ingredients you entered do not exist in your personal database.
+    If you have had a reaction to this product you can <a href="user/add">add</a> the ingredients to your database.
+    As with any new product be sure to do a patch test before regular use.
+</p> -->
 
-<ul th:each="item : ${aTrigger}">
+<p th:if="${existError} and ${existError.size()}">Based on your saved triggers, these ingredients may cause a reaction</p>
+<ul th:each="item : ${existError}">
     <li th:text="${item}" name="item"></li>
 </ul>
+<br>
+
+<p>If no matches are found, congratulations this product might work for you. As with any new product be sure to do a patch
+test.</p>
 
 
 </body>
