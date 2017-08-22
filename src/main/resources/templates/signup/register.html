@@ -2,9 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body class="container">
+<nav th:replace="fragments :: navigation-sign-up"></nav>
 <h1 th:text="${title}"></h1>
 
-<nav th:replace="fragments :: navigation"></nav>
 
 <form method="post" th:object="${registerForm}" style="width:600px;">
     <div class="form-group">

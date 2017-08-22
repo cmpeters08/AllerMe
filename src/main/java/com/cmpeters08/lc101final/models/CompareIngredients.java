@@ -22,9 +22,12 @@ public class CompareIngredients {
 
     public static ArrayList<String> commonItems(){
 
-        String[] productOneSplit = getProductOne().toLowerCase().split(", ");
+        String productOneCommas = getProductOne().replaceAll("/", ", ");
+        String productTwoCommas = getProductTwo().replaceAll("/", ", ");
+
+        String[] productOneSplit = productOneCommas.toLowerCase().split(", ");
         ArrayList<String> productOneList = new ArrayList<String>(Arrays.asList(productOneSplit));
-        String[] productTwoSplit = getProductTwo().toLowerCase().split(", ");
+        String[] productTwoSplit = productTwoCommas.toLowerCase().split(", ");
         ArrayList<String> productTwoList = new ArrayList<String>(Arrays.asList(productTwoSplit));
 
         ArrayList<String> commonItems = new ArrayList();
@@ -58,7 +61,9 @@ public class CompareIngredients {
 
     public static ArrayList<String> compareNewItem() {
 
-        String[] productOneSplit = getProductOne().toLowerCase().split(", ");
+
+        String productOneCommas = getProductOne().replaceAll("/", ", ");
+        String[] productOneSplit = productOneCommas.toLowerCase().split(", ");
         ArrayList<String> productOneList = new ArrayList<String>(Arrays.asList(productOneSplit));
 //        String[] productTwoSplit = getProductTwo().toLowerCase().split(", ");
 //        ArrayList<String> productTwoList = new ArrayList<String>(Arrays.asList(productTwoSplit));

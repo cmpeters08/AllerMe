@@ -3,20 +3,25 @@
 <head th:replace="fragments :: head"></head>
 
 <body class="container">
+<nav th:replace="fragments :: navigation"></nav>
 
 <h1 th:text="${title}">Default Title</h1>
-<p th:text="${description}">Default Description</p>
+<!--<p th:text="${description}">Default Description</p>-->
 
-<form method="post">
-
-    <div th:each="trigger : ${triggers}" class="checkbox">
+<div class="panel panel-default">
+    <div class="panel-heading">Delete Ingredients From Your Profile</div>
+<form th:object="${trigger}" method="post">
+    <table class="table">
+        <tr th:each="trigger : ${triggers}">
+            <td>
         <input type="checkbox" name="triggerIds" th:value="${trigger.id}" th:id="${trigger.id}"/>
         <label th:for="${trigger.id}" th:text="${trigger.knownTriggers}"></label>
-        <br />
-    </div>
-
+            </td>
+        </tr>
+    </table>
     <input type="submit" value="Remove Selected" />
 </form>
+</div>
 
 </body>
 </html>

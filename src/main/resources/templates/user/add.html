@@ -3,24 +3,38 @@
 <head th:replace="fragments :: head"></head>
 
 <body class="container">
-
+<nav th:replace="fragments :: navigation"></nav>
 
 <h1 th:text="${title}">Default Title</h1>
-<h3> Hello, <span th:text="${username}"></span></h3>
 <p th:text="${description}">Default Description</p>
 
 
-    <p th:if="${existError} and ${existError.size()}">These Triggers are already in your profile, no need to add them again!</p>
-    <ul th:each="item : ${existError}">
-        <li th:text="${item}" name="item"></li>
-    </ul>
 
+<div class="col-md-6">
+    <h3>Know what you're allergic to?</h3>
+    <h4>Add it to your profile here!</h4><br />
 <form th:object="${trigger}" method="post">
-    <label th:for="newTrigger">Add A Trigger</label>
+    <label th:for="newTrigger">Add A Trigger</label><br />
     <input type="text" name="newTrigger" />
     <input type="submit" value="Add Trigger" />
-
 </form>
+</div>
+
+<div class="col-md-6">
+<div class="panel panel-default" th:if="${newTrigger} and ${newTrigger.size()}">
+    <div class="panel-heading">These ingredients have been saved to your profile</div>
+    <ul th:each="trigger : ${newTrigger}">
+    <li th:text="${trigger}" name="trigger"></li>
+    </ul>
+</div>
+
+<div class="panel panel-default" th:if="${existError} and ${existError.size()}">
+    <div class="panel-heading">These Triggers are already in your profile, no need to add them again!</div>
+<ul th:each="item : ${existError}">
+    <li th:text="${item}" name="item"></li>
+</ul>
+</div>
+</div>
 
 </body>
 </html>

@@ -3,35 +3,25 @@
 <head th:replace="fragments :: head"></head>
 
 <body class="container">
+<nav th:replace="fragments :: navigation"></nav>
 
 <h1 th:text="${title}">Default Title</h1>
 <p th:text="${description}">Default Description</p>
 
 
-      <!-- <td th:each="item : ${possibleTriggers}" th:text="${item}"></td> -->
-       <!-- <td th:text="${possibleTriggers}"></td> -->
-       <!--
-       <td th:text="${productOne}"></td>
-   </tr>
-    <tr>
-       <td th:text="${productTwo}"></td>
-    </tr>
-    <tr>
-        <td th:text="${compareItems}"></td>
-    </tr>
--->
-
-<p th:if="${existError} and ${existError.size()}">These Triggers are already in your profile, no need to add them again!</p>
-<ul th:each="item : ${existError}">
-    <li th:text="${item}" name="item"></li>
+<div class="panel panel-default" th:if="${existError} and ${existError.size()}">
+    <div class="panel-heading">These Triggers are already in your profile, no need to add them again!</div>
+<ul class="list-group" th:each="item : ${existError}">
+    <li class="list-group-item" th:text="${item}" name="item"></li>
 </ul>
+</div>
 
-
-<p>Here are the common ingredients, would you like to save them to your profile.</p>
+<div class="panel panel-default">
+<div class="panel-heading">Save Common Triggers</div>
+<div class="panel-body">These are the ingredients present in both products. Would you like to save them to your profile?</div>
 <form th:object="${trigger}" method="post" action="../user/savedresults">
-<table class="trigger-results">
+<table class="table">
     <tr th:each="aTrigger : ${compareItems}">
-      <!--  <td th:text="${item}" name="item"></td> -->
         <td>
         <input type="checkbox" name="aTrigger" th:value="${aTrigger}" />
             <label th:for="aTrigger" th:text="${aTrigger}" name="${aTrigger}"></label>
@@ -40,15 +30,7 @@
 </table>
     <input type="submit" value="Save Triggers" />
 </form>
-
-<!--
-<form method="post" action="../user/savedresults">
-<ul th:each="item : ${compareItems}">
-    <li th:text="${item}" name="item"></li>
-</ul>
-</form>
--->
-
+</div>
 
 </body>
 </html>

@@ -3,6 +3,7 @@
 <head th:replace="fragments :: head"></head>
 
 <body class="container">
+<nav th:replace="fragments :: navigation"></nav>
 
 <h1 th:text="${title}">Default Title</h1>
 <p th:text="${description}">Default Description</p>
@@ -17,10 +18,9 @@
 <ul th:each="item : ${existError}">
     <li th:text="${item}" name="item"></li>
 </ul>
-<br>
+<br> </br>
 
-<p>If no matches are found, congratulations this product might work for you. As with any new product be sure to do a patch
-test.</p>
+<p>If no matches are found, congratulations this product might work for you. As with any new product be sure to do a patch test.</p>
 
 
 </body>

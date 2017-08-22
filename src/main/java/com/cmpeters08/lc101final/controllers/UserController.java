@@ -30,7 +30,7 @@ public class UserController extends AbstractController {
         model.addAttribute("user", currentUser);
         model.addAttribute("title", "Saved Triggers");
         model.addAttribute("triggers", triggerDao.findByUser(currentUser));
-        // model.addAttribute("triggers", triggerDao.findAll());
+
         return "user/index";
     }
 
@@ -64,7 +64,7 @@ public class UserController extends AbstractController {
                 triggerDao.save(dasTrigger);
             }
 
-        return "user/savedresults";
+        return "redirect:";
 
     }
 
@@ -113,21 +113,31 @@ public class UserController extends AbstractController {
 
         String[] addManyTriggers = newTrigger.split(", ");
         ArrayList<String> compareItemDb = new ArrayList();
+        ArrayList<Trigger> addedTriggers = new ArrayList();
 
         for(String item : addManyTriggers){
             if(!triggerAsString.contains(item)){
                 Trigger addTrigger = new Trigger();
-                addTrigger.setKnownTriggers(item);
+                addTrigger.setKnownTriggers(item.trim().replaceAll("\\s{2,}", " "));
                 addTrigger.setUser(currentUser);
                 triggerDao.save(addTrigger);
+                addedTriggers.add(addTrigger);
             }
             else{
                 compareItemDb.add(item);
             }
         }
+
+        //confirms what the user saved to the database.
+        ArrayList<String> addedTrigger = new ArrayList();
+        for (Trigger trigger : addedTriggers){
+            addedTrigger.add(trigger.getKnownTriggers());
+        }
+
+        model.addAttribute("newTrigger", addedTrigger);
         model.addAttribute("existError", compareItemDb);
 
-        //return"user/index";
+
         return "user/add";
     }
 
@@ -145,25 +155,22 @@ public class UserController extends AbstractController {
 
     @RequestMapping(value="compare-new", method = RequestMethod.POST)
     public String compareNewProductPost(@RequestParam String productOne, Model model, HttpServletRequest request) {
-        model.addAttribute("title", "these items are in your database");
 
         User currentUser = getUserFromSession(request.getSession());
 
         ArrayList<Trigger> currentUserTriggers = triggerDao.findByUser(currentUser);
         ArrayList<String> triggerStr = new ArrayList<>();
 
-
         for(Trigger item : currentUserTriggers){
             triggerStr.add(item.getKnownTriggers().toLowerCase());
         }
-        CompareIngredients.setProductOne(productOne);
+        CompareIngredients.setProductOne(productOne.trim().replaceAll("\\s{2,}", " "));
         CompareIngredients.setTheSavedIngredients(triggerStr);
         ArrayList commonItems = CompareIngredients.compareNewItem();
 
         model.addAttribute("existError", commonItems);
 
 
-            //return "user/comparenewresults";
-        return "user/savedresults";
+        return "user/comparenew";
     }
 }

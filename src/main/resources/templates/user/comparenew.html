@@ -3,20 +3,31 @@
 <head th:replace="fragments :: head"></head>
 
 <body class="container">
-
+<nav th:replace="fragments :: navigation"></nav>
 
 <h1 th:text="${title}">Default Title</h1>
-<h3> Hello, <span th:text="${username}"></span></h3>
+<h3> Hello, <span th:text="${user.username}"></span></h3>
 <p th:text="${description}">Default Description</p>
 
 <form th:object="${trigger}" method="post">
-    <div class="col-md-5">
+    <div class="col-md-6">
         <label th:for="productOne">New Product Ingredients</label>
         <textarea class="form-control"  name="productOne" style="resize:none" cols="5" rows="10"></textarea>
-    </div>
 
     <input type="submit" value="Compare to Saved Triggers" />
+    </div>
 </form>
 
+
+<div class="col-md-6">
+<div class="panel panel-default" th:if="${existError} and ${existError.size()}">
+    <div class="panel-heading">Based on your saved triggers, these ingredients may cause a reaction</div>
+<ul class="list-group" th:each="item : ${existError}">
+    <li class="list-group-item" th:text="${item}" name="item"></li>
+</ul>
+<br> </br>
+<p>If no matches are found, congratulations this product might work for you. As with any new product be sure to do a patch test.</p>
+</div>
+</div>
 </body>
 </html>

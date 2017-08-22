@@ -1,4 +1,11 @@
 textarea {
 resize: none;
+}
 
+.right-way{
+padding-right: 0.5%;
+margin-left: -150px;
+}
+.left-way{
+margin-right: -50px;
 }
