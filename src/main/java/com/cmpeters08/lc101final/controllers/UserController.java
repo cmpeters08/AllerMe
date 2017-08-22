@@ -82,12 +82,17 @@ public class UserController extends AbstractController {
 
     //Allows User to Remove saved triggers from the database
     @RequestMapping(value = "remove", method = RequestMethod.POST)
-    public String removeTheTrigger(@RequestParam int[] triggerIds) {
+    public String removeTheTrigger(@RequestParam int[] triggerIds, Model model) {
+
+        ArrayList<String> deletedTriggerNames = new ArrayList();
 
         for (int triggerId : triggerIds) {
+            deletedTriggerNames.add(triggerDao.findOne(triggerId).getKnownTriggers());
             triggerDao.delete(triggerId);
         }
-        return "redirect:";
+
+        model.addAttribute("removedTrigger", deletedTriggerNames);
+        return "user/remove";
     }
 
 

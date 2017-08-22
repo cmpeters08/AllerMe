@@ -8,20 +8,35 @@
 <h1 th:text="${title}">Default Title</h1>
 <!--<p th:text="${description}">Default Description</p>-->
 
-<div class="panel panel-default">
-    <div class="panel-heading">Delete Ingredients From Your Profile</div>
-<form th:object="${trigger}" method="post">
-    <table class="table">
-        <tr th:each="trigger : ${triggers}">
-            <td>
-        <input type="checkbox" name="triggerIds" th:value="${trigger.id}" th:id="${trigger.id}"/>
-        <label th:for="${trigger.id}" th:text="${trigger.knownTriggers}"></label>
-            </td>
-        </tr>
-    </table>
-    <input type="submit" value="Remove Selected" />
-</form>
+<div class="col-md-6">
+    <div th:unless="${removedTrigger} and ${removedTrigger.size()}">
+        <div class="panel panel-default">
+            <div class="panel-heading">Delete Ingredients From Your Profile</div>
+            <form th:object="${trigger}" method="post">
+                <table class="table">
+                    <tr th:each="trigger : ${triggers}">
+                        <td>
+                            <input type="checkbox" name="triggerIds" th:value="${trigger.id}" th:id="${trigger.id}"/>
+                            <label th:for="${trigger.id}" th:text="${trigger.knownTriggers}" name="triggerName"></label>
+                        </td>
+                    </tr>
+                </table>
+                <input type="submit" value="Remove Selected" />
+            </form>
+        </div>
+    </div>
 </div>
+
+<div class="col-md-6">
+    <div class="panel panel-default" th:if="${removedTrigger} and ${removedTrigger.size()}">
+        <div class="panel-heading">These triggers have been removed from your profile</div>
+        <br />
+        <ul th:each="trigger : ${removedTrigger}">
+            <li th:text="${trigger}" name="trigger"></li>
+        </ul>
+    </div>
+</div>
+
 
 </body>
 </html>
