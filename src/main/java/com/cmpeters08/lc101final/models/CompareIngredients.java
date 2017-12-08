@@ -19,21 +19,26 @@ public class CompareIngredients {
     private  static ArrayList<String> theSavedIngredients;
 
 
+   public static ArrayList<String> cleanInput(String product) {
+       String myString = product.toLowerCase().trim().replaceAll("[CI\\s\\d]{6,9}", "");
+       String finalString = myString.toLowerCase().trim().replaceAll("[()\\\\/]", "");
+
+       String[] listString = finalString.split("[,]");
+       ArrayList<String> finalList = new ArrayList<String>(Arrays.asList(listString));
+
+       return finalList;
+   }
 
     public static ArrayList<String> commonItems(){
 
-        String productOneCommas = getProductOne().replaceAll("/", ", ");
-        String productTwoCommas = getProductTwo().replaceAll("/", ", ");
-
-        String[] productOneSplit = productOneCommas.toLowerCase().split(", ");
-        ArrayList<String> productOneList = new ArrayList<String>(Arrays.asList(productOneSplit));
-        String[] productTwoSplit = productTwoCommas.toLowerCase().split(", ");
-        ArrayList<String> productTwoList = new ArrayList<String>(Arrays.asList(productTwoSplit));
+        ArrayList<String> productOneList = cleanInput(getProductOne());
+        ArrayList<String> productTwoList = cleanInput(getProductTwo());
 
         ArrayList<String> commonItems = new ArrayList();
 
         for (String item : productOneList){
             if(productTwoList.contains(item)){
+                if(!commonItems.contains(item))
                 commonItems.add(item);
             }
         }
