@@ -21,6 +21,7 @@ public abstract class AbstractController {
     @Autowired
     protected TriggerDao triggerDao;
 
+
     /*
     * Other DAOs can be autowired here and they'll be available
     * to all classes extending AbstractController

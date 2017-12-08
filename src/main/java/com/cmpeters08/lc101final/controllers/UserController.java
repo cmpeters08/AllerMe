@@ -25,13 +25,17 @@ public class UserController extends AbstractController {
     @RequestMapping(value = "")
     public String index(Model model, HttpServletRequest request) {
 
-        User currentUser = getUserFromSession(request.getSession());
+        User currentUser = getUser(request);
 
         model.addAttribute("user", currentUser);
         model.addAttribute("title", "Saved Triggers");
         model.addAttribute("triggers", triggerDao.findByUser(currentUser));
 
         return "user/index";
+    }
+
+    private User getUser(HttpServletRequest request) {
+        return getUserFromSession(request.getSession());
     }
 
     @RequestMapping(value = "savedresults", method = RequestMethod.GET)
@@ -71,7 +75,7 @@ public class UserController extends AbstractController {
     @RequestMapping(value = "remove", method = RequestMethod.GET)
     public String removeTrigger(Model model, HttpServletRequest request) {
 
-        User currentUser = getUserFromSession(request.getSession());
+        User currentUser = getUser(request);
 
         model.addAttribute("triggers", triggerDao.findByUser(currentUser));
         model.addAttribute("title", "Delete Triggers From the Database");
@@ -99,7 +103,7 @@ public class UserController extends AbstractController {
     @RequestMapping(value ="add-new", method = RequestMethod.GET)
     public String addNewTrigger(Model model, HttpServletRequest request){
 
-        User currentUser = getUserFromSession(request.getSession());
+        User currentUser = getUser(request);
         model.addAttribute("triggers", triggerDao.findByUser(currentUser));
         model.addAttribute("user", currentUser);
 
@@ -109,7 +113,7 @@ public class UserController extends AbstractController {
     @RequestMapping(value = "add-new", method = RequestMethod.POST)
     public String addNewTriggerPost(@RequestParam String newTrigger, HttpServletRequest request, Model model){
 
-        User currentUser = getUserFromSession(request.getSession());
+        User currentUser = getUser(request);
         ArrayList<Trigger> savedUserTriggers = triggerDao.findByUser(currentUser);
         ArrayList<String> triggerAsString = new ArrayList<>();
         for(Trigger trigger : savedUserTriggers){
@@ -150,7 +154,7 @@ public class UserController extends AbstractController {
     @RequestMapping(value = "compare-new", method = RequestMethod.GET)
     public String compareNewProductGet(Model model, HttpServletRequest request) {
 
-        User currentUser = getUserFromSession(request.getSession());
+        User currentUser = getUser(request);
         triggerDao.findByUser(currentUser);
         model.addAttribute("productOne", CompareIngredients.getProductOne());
         model.addAttribute("trigger", new Trigger());
@@ -161,7 +165,7 @@ public class UserController extends AbstractController {
     @RequestMapping(value="compare-new", method = RequestMethod.POST)
     public String compareNewProductPost(@RequestParam String productOne, Model model, HttpServletRequest request) {
 
-        User currentUser = getUserFromSession(request.getSession());
+        User currentUser = getUser(request);
 
         ArrayList<Trigger> currentUserTriggers = triggerDao.findByUser(currentUser);
         ArrayList<String> triggerStr = new ArrayList<>();

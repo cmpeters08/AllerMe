@@ -23,7 +23,7 @@ public class TriggerController extends AbstractController{
 
     @RequestMapping(value="", method = RequestMethod.GET)
     public String index(Model model, HttpServletRequest request){
-        User currentUser = getUserFromSession(request.getSession());
+        User currentUser = getUser(request);
         //model.addAttribute("title", "AllerMe");
         model.addAttribute("description", "Compare two products, that have caused allergic " +
                 "reactions, to find the common ingredients");
@@ -31,11 +31,15 @@ public class TriggerController extends AbstractController{
         return "compare/index";
     }
 
+    private User getUser(HttpServletRequest request) {
+        return getUserFromSession(request.getSession());
+    }
+
     @RequestMapping(value="", method = RequestMethod.POST)
     public String index2(Model model, HttpServletRequest request){
 
-        User currentUser = getUserFromSession(request.getSession());
-      //  model.addAttribute("title", "AllerMe");
+        User currentUser = getUser(request);
+        //  model.addAttribute("title", "AllerMe");
         model.addAttribute("description","Compare two products to find the common ingredients" );
         model.addAttribute("productOne", CompareIngredients.getProductOne());
         model.addAttribute("productTwo", CompareIngredients.getProductTwo());
@@ -58,8 +62,8 @@ public class TriggerController extends AbstractController{
                           @RequestParam String productOne, @RequestParam String productTwo, HttpServletRequest request){
 
 
-        User currentUser = getUserFromSession(request.getSession());
-       ArrayList<Trigger> savedUserTriggers = triggerDao.findByUser(currentUser);
+        User currentUser = getUser(request);
+        ArrayList<Trigger> savedUserTriggers = triggerDao.findByUser(currentUser);
        //convert trigger to string
         ArrayList<String> trstr = new ArrayList<>(); //this ArrayList holds the database objects as strings
         for(Trigger trigger : savedUserTriggers){
