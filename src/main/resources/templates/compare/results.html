@@ -16,7 +16,7 @@
 </ul>
 </div>
 
-<div class="panel panel-default">
+<div class="panel panel-default" th:if="${compareItems} and ${compareItems.size()}">
 <div class="panel-heading">Save Common Triggers</div>
 <div class="panel-body">These are the ingredients present in both products. Would you like to save them to your profile?</div>
 <form th:object="${trigger}" method="post" action="../user/savedresults">

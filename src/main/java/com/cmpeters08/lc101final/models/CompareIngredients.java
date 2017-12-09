@@ -23,7 +23,7 @@ public class CompareIngredients {
        String myString = product.toLowerCase().trim().replaceAll("[CI\\s\\d]{6,9}", "");
        String finalString = myString.toLowerCase().trim().replaceAll("[()\\\\/]", "");
 
-       String[] listString = finalString.split("[,]");
+       String[] listString = finalString.split(", ");
        ArrayList<String> finalList = new ArrayList<String>(Arrays.asList(listString));
 
        return finalList;
@@ -31,14 +31,13 @@ public class CompareIngredients {
 
     public static ArrayList<String> commonItems(){
 
-        ArrayList<String> productOneList = cleanInput(getProductOne());
-        ArrayList<String> productTwoList = cleanInput(getProductTwo());
+        ArrayList<String> productOneList = cleanInput(productOne);
+        ArrayList<String> productTwoList = cleanInput(productTwo);
 
         ArrayList<String> commonItems = new ArrayList();
 
         for (String item : productOneList){
             if(productTwoList.contains(item)){
-                if(!commonItems.contains(item))
                 commonItems.add(item);
             }
         }
@@ -67,12 +66,13 @@ public class CompareIngredients {
     public static ArrayList<String> compareNewItem() {
 
 
-        String productOneCommas = getProductOne().replaceAll("/", ", ");
-        String[] productOneSplit = productOneCommas.toLowerCase().split(", ");
-        ArrayList<String> productOneList = new ArrayList<String>(Arrays.asList(productOneSplit));
+//        String productOneCommas = getProductOne().replaceAll("/", ", ");
+//        String[] productOneSplit = productOneCommas.toLowerCase().split(", ");
+//        ArrayList<String> productOneList = new ArrayList<String>(Arrays.asList(productOneSplit));
 //        String[] productTwoSplit = getProductTwo().toLowerCase().split(", ");
 //        ArrayList<String> productTwoList = new ArrayList<String>(Arrays.asList(productTwoSplit));
 
+        ArrayList<String> productOneList = cleanInput(productOne);
         ArrayList<String> commonItems = new ArrayList();
 
         for (String item : productOneList){
